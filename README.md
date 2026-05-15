@@ -45,7 +45,7 @@ Recommended reading order:
 
 ## Quick start
 
-Build or publish the server, open the `config.json` configuration file to personalize the Server's behavior, and put game files under the configured game root.
+[Download](https://github.com/HolographicWings/Modern_MHFZ_PatchServer/releases) or Build the server, open the `config.json` configuration file to personalize the Server's behavior, and put game files under the configured game root.
 
 Default layout:
 
@@ -118,7 +118,7 @@ This project is still not Feature Complete. Some parts are intentionally minimal
 - The admin panel command system exists, but available commands are limited to `Stop`.
 - The admin panel uses HTTP Basic authentication and must be protected by HTTPS and network restrictions in production.
 - The native HTTPS support is TBD.
-- External WebServer is theorically functional, but might require custom rules for your webserver to provide the proper ETag in the `check` & `check2` endpoints.
+- External WebServer is theorically functional, but might requires custom rules for your webserver to provide the proper ETag in the `check` & `check2` endpoints.
 
 See [Development notes](docs/development.md) and [Troubleshooting](docs/troubleshooting.md) for implementation notes and known pitfalls.
 
