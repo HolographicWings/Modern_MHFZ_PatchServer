@@ -39,4 +39,7 @@
   <ItemGroup>
 	<EmbeddedResource Include="Pages\AdminPanel.html" LogicalName="AdminPanel.html" />
   </ItemGroup>
+  <!-- <ItemGroup> -->
+    <!-- <PackageReference Include="System.IO.Hashing" Version="10.0.8" /> -->
+  <!-- </ItemGroup> -->
 </Project>

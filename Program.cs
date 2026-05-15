@@ -57,7 +57,7 @@ namespace PatchServer
                 // Create Game folder if it doesn't exist
                 Directory.CreateDirectory(Config.options.GameData.RootFolder);
 
-                string basePackagePath = Path.Combine(Config.options.GameData.RootFolder, "Base", Config.options.GameData.BasePackageCurrentVersion);
+                string basePackagePath = Path.Combine(Config.options.GameData.RootFolder, "Base", Config.options.GameData.BasePackageVersion);
                 Logger.LogInfo("Processing base package at: " + basePackagePath, "Main");
 
                 Directory.CreateDirectory(basePackagePath);
@@ -67,7 +67,7 @@ namespace PatchServer
                 // Read existing fileinfos for persistent digest if enabled
                 fileDescriptor[] basePersistentInfos = Array.Empty<fileDescriptor>();
                 bool basePersistentInfosEdited = false;
-                if (Config.options.GameData.PersistentChecksum)
+                if (Config.options.GameData.ChecksumCache)
                 {
                     basePersistentInfos = FileManifest.readFileinfo(basePackagePath);
                 }
@@ -87,7 +87,7 @@ namespace PatchServer
 
                     // Compute hash with persistent digest if enabled
                     string hash = string.Empty;
-                    if (Config.options.GameData.PersistentChecksum)
+                    if (Config.options.GameData.ChecksumCache)
                     {
                         var existingInfo = basePersistentInfos.FirstOrDefault(f => f.path == rPath);
                         // If file unchanged, reuse hash
@@ -119,7 +119,7 @@ namespace PatchServer
                 });
 
                 // If persistent checksum enabled and any file was changed, rewrite fileinfos
-                if (Config.options.GameData.PersistentChecksum && basePersistentInfosEdited)
+                if (Config.options.GameData.ChecksumCache && basePersistentInfosEdited)
                 {
                     File.WriteAllText(Path.Combine(basePackagePath, "fileinfos"), FileManifest.buildManifest(Config.options.GameData.fileHashes, 4));
                 }
@@ -129,7 +129,7 @@ namespace PatchServer
                 Config.options.GameData.manifest2 = FileManifest.buildManifest(Config.options.GameData.fileHashes, 3);
 
                 // If webserver disabled, and manifest needing to be updated, write the check files for the launcher.
-                if (!Config.options.WebServer.Enabled && (!Config.options.GameData.PersistentChecksum || basePersistentInfosEdited ||
+                if (!Config.options.WebServer.Enabled && (!Config.options.GameData.ChecksumCache || basePersistentInfosEdited ||
                 !File.Exists(Path.Combine(basePackagePath, "check")) || !File.Exists(Path.Combine(basePackagePath, "check2"))))
                 {
                     File.WriteAllText(Path.Combine(basePackagePath, "check"), Config.options.GameData.manifest);
@@ -141,6 +141,13 @@ namespace PatchServer
 
                 // Load packages from config, will throw if invalid
                 PackagesManager.LoadPackages();
+
+                // If webserver disabled, and manifest needing to be updated, write the packages files for the launcher.
+                if (!Config.options.WebServer.Enabled && (!Config.options.GameData.ChecksumCache || basePersistentInfosEdited ||
+                !File.Exists(Path.Combine(basePackagePath, "packages"))))
+                {
+                    File.WriteAllText(Path.Combine(basePackagePath, "packages"), Config.options.GameData.packagesManifest);
+                }
 
                 // Process each package
                 foreach (var package in Config.options.GameData.GamePackages)
@@ -162,7 +169,7 @@ namespace PatchServer
                         // Read existing fileinfos for persistent digest if enabled
                         fileDescriptor[] persistentInfos = Array.Empty<fileDescriptor>();
                         bool persistantInfosEdited = false;
-                        if (Config.options.GameData.PersistentChecksum)
+                        if (Config.options.GameData.ChecksumCache)
                         {
                             persistentInfos = FileManifest.readFileinfo(packagePath);
                         }
@@ -182,7 +189,7 @@ namespace PatchServer
 
                             // Compute hash with persistent digest if enabled
                             string hash = string.Empty;
-                            if (Config.options.GameData.PersistentChecksum)
+                            if (Config.options.GameData.ChecksumCache)
                             {
                                 var existingInfo = persistentInfos.FirstOrDefault(f => f.path == rPath);
                                 // If file unchanged, reuse hash
@@ -214,8 +221,8 @@ namespace PatchServer
 
                         });
 
-                        // If persistent checksum enabled and any file was changed, rewrite fileinfos
-                        if (Config.options.GameData.PersistentChecksum && persistantInfosEdited)
+                        // If checksum cache enabled and any file was changed, rewrite fileinfos
+                        if (Config.options.GameData.ChecksumCache && persistantInfosEdited)
                         {
                             File.WriteAllText(Path.Combine(packagePath, "fileinfos"), FileManifest.buildManifest(package.PackageVersions[i].fileHashes, 4));
                         }
@@ -225,7 +232,7 @@ namespace PatchServer
                         package.PackageVersions[i].manifest = FileManifest.buildManifest(package.PackageVersions[i].fileHashes, 3);
 
                         // If webserver disabled, and manifest needing to be updated, write the check files for the launcher.
-                        if (!Config.options.WebServer.Enabled && (!Config.options.GameData.PersistentChecksum || persistantInfosEdited ||
+                        if (!Config.options.WebServer.Enabled && (!Config.options.GameData.ChecksumCache || persistantInfosEdited ||
                         !File.Exists(Path.Combine(basePackagePath, "check")) || !File.Exists(Path.Combine(basePackagePath, "check2"))))
                         {
                             File.WriteAllText(Path.Combine(packagePath, "check"), package.PackageVersions[i].manifest);

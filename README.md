@@ -31,13 +31,14 @@ It is inspired from [`mrsasy89/MHFZ-Patch-Server`](https://github.com/mrsasy89/M
 ## Roadmap
 
 - HTTPS Support.
-- True External WebServer support.
+- Better External WebServer support.
 - Status page endpoint.
-- Supports console commands.
+- More console commands.
+- Support vanilla launcher (PC and maybe PS3).
 
 ## Documentation
 
-Full documentation will be available in the [Wiki](https://github.com/HolographicWings/Modern_MHFZ_PatchServer/wiki). (Not written yet)
+Full documentation will be available in the [Wiki](https://github.com/HolographicWings/Modern_MHFZ_PatchServer/wiki). (Writting in progress)
 
 Recommended reading order:
 
@@ -82,10 +83,10 @@ Common launcher endpoints:
 ```json
 {
   "GameData": {
-    "ChecksumThreads": 4,
-    "PersistentChecksum": true,
     "RootFolder": "",
-    "BasePackageCurrentVersion": "v1.0",
+    "BasePackageVersion": "v1.0",
+    "ChecksumThreads": 4,
+    "ChecksumCache": true,
     "GamePackages": []
   },
   "WebServer": {

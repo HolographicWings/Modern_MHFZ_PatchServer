@@ -35,6 +35,7 @@ namespace Modern_MHFZ_PatchServer.webserver
             using var listener = new HttpListener();
             // Interfaces to listen on.
             listener.Prefixes.Add($"http://{Config.options.WebServer.Listener}:{Config.options.WebServer.Port}/");
+            // TODO implements HTTPS
 
             listener.Start();
 
@@ -124,7 +125,7 @@ namespace Modern_MHFZ_PatchServer.webserver
                     "/" => GetStringStream("Hello from console server."), // Root path, can be used for health checks.
                     "/check" => GetManifestStream(context.Request,Config.options.GameData.manifest), // Legacy Manifest for base package, with hash and file paths. (Legacy launchers only)
                     "/check2" => GetManifestStream(context.Request,Config.options.GameData.manifest2), // New Manifest for base package, with hash, file paths and file sizes, used by new generation launchers. (New launchers only)
-                    "/ButterVersion.txt" => GetStringStream(Config.options.GameData.BasePackageCurrentVersion), // Send the current version of the base package. (Legacy and New launchers)
+                    "/ButterVersion.txt" => GetStringStream(Config.options.GameData.BasePackageVersion), // Send the current version of the base package. (Legacy and New launchers)
                     string p when IsPathOrChild(p, "/packages") => await GetPackageFileStream(context.Request, path), // Holding files and manifests of other packages. (New launchers only)
                     string p when IsPathOrChild(p, "/files") => await GetRawFileStream(path), // Holding raw files that are not part of any package, like launcher assets. (Legacy and New launchers)
                     "/status" => GetStringStream("Not implemented yet..."), // Can be used to provide server status or metrics. (New launchers only)

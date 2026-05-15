@@ -7,7 +7,7 @@ namespace Modern_MHFZ_PatchServer.utils
     // Determines if a file is relevant for patching based on its name, extension, and directory path.
     internal static class FileRevelance
     {
-        public static readonly string[] fileBlacklist = new[] { "check", "packages", "admin", "fileinfos", "ButterVersion.txt" };
+        public static readonly string[] fileBlacklist = new[] { "check", "check2", "packages", "admin", "fileinfos", "ButterVersion.txt" };
         public static readonly string[] extensionBlacklist = new[] { ".butterold" };
         public static readonly string[] directoryBlacklist = new[] { "package" };
 

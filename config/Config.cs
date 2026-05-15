@@ -22,10 +22,10 @@ namespace Modern_MHFZ_PatchServer.utils
         }
         public sealed class GameDataOptions
         {
-            public int ChecksumThreads { get; set; } = 4;
             public string RootFolder { get; set; } = string.Empty;
-            public string BasePackageCurrentVersion { get; set; } = "v1.0";
-            public bool PersistentChecksum { get; set; } = true;
+            public string BasePackageVersion { get; set; } = "v1.0";
+            public int ChecksumThreads { get; set; } = 4;
+            public bool ChecksumCache { get; set; } = true;
             public GamePackage[] GamePackages { get; init; } = Array.Empty<GamePackage>();
             [JsonIgnore] public string[] FileList { get; set; } = Array.Empty<string>();
             [JsonIgnore] public ConcurrentDictionary<string, string> RawFilesList { get; set; } = new ConcurrentDictionary<string, string>();
@@ -119,8 +119,8 @@ namespace Modern_MHFZ_PatchServer.utils
             if (options.GameData.RootFolder.Length == 0)
                 options.GameData.RootFolder = Path.Combine(Environment.CurrentDirectory, "Game");
 
-            if (string.IsNullOrWhiteSpace(options.GameData.BasePackageCurrentVersion))
-                throw new InvalidOperationException("BaseGameVersion is required.");
+            if (string.IsNullOrWhiteSpace(options.GameData.BasePackageVersion))
+                throw new InvalidOperationException("BasePackageVersion is required.");
 
             if(options.GameData.ChecksumThreads > Environment.ProcessorCount)
                 Logger.LogWarning($"ChecksumThreads is above the number of processor cores, clamping value to {Environment.ProcessorCount}.", "Config");

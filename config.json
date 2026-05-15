@@ -1,9 +1,9 @@
 {
 	"GameData": {
-		"ChecksumThreads": 4,
-		"PersistentChecksum": true,
 		"RootFolder": "",
-		"BasePackageCurrentVersion": "v1.0",
+		"BasePackageVersion": "v1.0",
+		"ChecksumThreads": 4,
+		"ChecksumCache": true,
 		"GamePackages": [
 			{
 				"Name": "Package1",
