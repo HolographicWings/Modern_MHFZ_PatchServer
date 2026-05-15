@@ -1,0 +1,59 @@
+{
+	"GameData": {
+		"ChecksumThreads": 4,
+		"PersistentChecksum": true,
+		"RootFolder": "",
+		"BasePackageCurrentVersion": "v1.0",
+		"GamePackages": [
+			{
+				"Name": "Package1",
+				"Mandatory": false,
+				"Description": "",
+				"CurrentVersion": "Test",
+				"PackageVersions": [
+					{
+						"Name": "Test",
+						"Folder": "v1.0"
+					},
+					{
+						"Name": "v1.1",
+						"Folder": "v1.1"
+					}
+				]
+			},
+			{
+				"Name": "Package2",
+				"Mandatory": true,
+				"Description": "",
+				"CurrentVersion": "",
+				"PackageVersions": [
+					{
+						"Name": "English",
+						"Folder": "en"
+					},
+					{
+						"Name": "French",
+						"Folder": "fr"
+					}
+				]
+			}
+		]
+	},
+	"WebServer": {
+		"Enabled": true,
+		"Port": 8094,
+		"Listener": "127.0.0.1",
+		"MaxClients": 5,
+		"BandwidthLimit": "20M",
+		"AdminPanel": {
+			"Enabled": true,
+			"Username": "admin",
+			"Password": "change-me"
+		}
+	},
+	"Logger": {
+		"WriteLog": true,
+		"Debug": false,
+		"PuTTYMode": false
+	}
+}

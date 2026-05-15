@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>MHFZ Patch Server Admin Panel</title>
+	<style>
+        :root {
+            color-scheme: dark;
+        }
+
+		body {
+			font-family: system-ui, sans-serif;
+			color: #eee;
+			margin: 40px;
+		}
+
+		input[type="text"] {
+			width: 520px;
+			padding: 8px;
+			font-size: 16px;
+			background: #222;
+			color: #eee;
+			border: 1px solid #555;
+		}
+
+		button {
+			padding: 8px 14px;
+			font-size: 16px;
+			cursor: pointer;
+		}
+
+		pre {
+			margin-top: 20px;
+			padding: 12px;
+			background: #1b1b1b;
+			border: 1px solid #333;
+			white-space: pre-wrap;
+		}
+	</style>
+</head>
+<body>
+	<h1>MHFZ Patch Server Admin</h1>
+
+	<form method="post">
+		<input type="text" name="command" autofocus autocomplete="off" placeholder="Enter command">
+		<button type="submit">Run</button>
+	</form>
+
+	<pre>{{RESULT}}</pre>
+</body>
+</html>
