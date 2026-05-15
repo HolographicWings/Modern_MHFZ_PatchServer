@@ -12,10 +12,10 @@ It is inspired from [`mrsasy89/MHFZ-Patch-Server`](https://github.com/mrsasy89/M
 ## Features
 
 ### Legacy
-- Serves game files over HTTP as it's predecessors.
-- Generates launcher manifests as it's predecessors.
-- Provides `ButterVersion.txt` endpoints for version checks as it's predecessors.
-- Supports raw file hosting through the `Files/` directory as it's predecessors.
+- Serves game files over HTTP.
+- Generates launcher manifests.
+- Provides `ButterVersion.txt` endpoints for version checks.
+- Supports raw file hosting through the `Files/` directory.
 - Provides configurable HTTP listener, port, client limit, and bandwidth limit.
 - Supports legacy manifest format (`check` endpoint)
 - Provides configurable HTTP port and client limit.
