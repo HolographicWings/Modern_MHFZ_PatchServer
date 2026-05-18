@@ -7,33 +7,41 @@
 		"GamePackages": [
 			{
 				"Name": "Package1",
-				"Mandatory": false,
 				"Description": "",
-				"CurrentVersion": "Test",
+				"LatestVersion": "Test",
+				"Enabled": true,
+				"Mandatory": false,
+				"Multiple": true,
 				"PackageVersions": [
 					{
-						"Name": "Test",
-						"Folder": "v1.0"
+						"Name": "Test1",
+						"Folder": "Test1",
+						"Enabled": true
 					},
 					{
-						"Name": "v1.1",
-						"Folder": "v1.1"
+						"Name": "Test2",
+						"Folder": "Test2",
+						"Enabled": true
 					}
 				]
 			},
 			{
 				"Name": "Package2",
-				"Mandatory": true,
 				"Description": "",
-				"CurrentVersion": "",
+				"LatestVersion": "",
+				"Enabled": true,
+				"Mandatory": true,
+				"Multiple": false,
 				"PackageVersions": [
 					{
 						"Name": "English",
-						"Folder": "en"
+						"Folder": "en",
+						"Enabled": true
 					},
 					{
 						"Name": "French",
-						"Folder": "fr"
+						"Folder": "fr",
+						"Enabled": true
 					}
 				]
 			}

@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
+using static Modern_MHFZ_PatchServer.utils.Config;
 
 namespace Modern_MHFZ_PatchServer.utils
 {
@@ -31,21 +33,25 @@ namespace Modern_MHFZ_PatchServer.utils
         // Lists all enabled packages and their versions in a tab-separated format.
         public static void ListPackages()
         {
-            StringBuilder sb = new StringBuilder(capacity: 1000);
-            foreach (var package in Config.options.GameData.GamePackages)
+            Config.options.GameData.packagesManifest = JsonSerializer.Serialize(new
             {
-                if(!package.Enabled)
-                    continue;
-
-                foreach (var version in package.PackageVersions)
+                GamePackages = Config.options.GameData.GamePackages.Where(p => p.Enabled && p.PackageVersions.Any(v => v.Enabled)).Select(p => new
                 {
-                    if(!version.Enabled)
-                        continue;
+                    p.Name,
+                    p.Description,
+                    p.LatestVersion,
+                    p.Enabled,
+                    p.Mandatory,
+                    p.Multiple,
 
-                    sb.AppendLine($"{package.Name}\t{version.Name}");
-                }
-            }
-            Config.options.GameData.packagesManifest = sb.ToString();
+                    PackageVersions = p.PackageVersions.Where(v => v.Enabled).Select(v => new
+                    {
+                        v.Name,
+                        v.Folder,
+                        v.Enabled
+                    }).ToArray()
+                }).ToArray()
+            });
         }
     }
 }

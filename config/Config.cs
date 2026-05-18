@@ -3,6 +3,7 @@ using PatchServer;
 using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.Net;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Modern_MHFZ_PatchServer.utils
@@ -37,10 +38,11 @@ namespace Modern_MHFZ_PatchServer.utils
         public sealed class GamePackage
         {
             public string Name { get; init; } = string.Empty;
-            public bool Mandatory { get; set; } = false;
             public string Description { get; init; } = string.Empty;
-            public string CurrentVersion { get; init; } = string.Empty;
+            public string LatestVersion { get; init; } = string.Empty;
             public bool Enabled { get; set; } = true;
+            public bool Mandatory { get; set; } = false;
+            public bool Multiple { get; set; } = false;
             public GamePackageVersion[] PackageVersions { get; init; } = Array.Empty<GamePackageVersion>();
         }
         public sealed class GamePackageVersion
@@ -87,14 +89,14 @@ namespace Modern_MHFZ_PatchServer.utils
                 if (!File.Exists(configPath))
                 {
                     Logger.LogWarning("config.json not found, creating default config.json", "Config");
-                    string defaultJson = System.Text.Json.JsonSerializer.Serialize(new RootConfig(), ConfigJsonContext.Default.RootConfig);
+                    string defaultJson = JsonSerializer.Serialize(new RootConfig(), ConfigJsonContext.Default.RootConfig);
                     File.WriteAllText(configPath, defaultJson);
                 }
 
                 string json = File.ReadAllText(configPath);
 
                 // Deserialize with source-generated context
-                options = System.Text.Json.JsonSerializer.Deserialize(json, ConfigJsonContext.Default.RootConfig) ?? throw new InvalidOperationException("config.json is empty or invalid.");
+                options = JsonSerializer.Deserialize(json, ConfigJsonContext.Default.RootConfig) ?? throw new InvalidOperationException("config.json is empty or invalid.");
 
                 Logger.LogInfo("Checking configuration...", "Config");
                 Validate();

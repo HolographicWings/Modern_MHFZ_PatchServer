@@ -348,7 +348,15 @@ namespace Modern_MHFZ_PatchServer.webserver
                     // Allow "latest" as a version name to refer to the current version of the package.
                     if (versionName == "latest")
                     {
-                        versionName = gamePackage.CurrentVersion;
+                        if (String.IsNullOrEmpty(gamePackage.LatestVersion))
+                        {
+                            response.Code = 404;
+                            return Task.FromResult(response);
+                        }
+                        else
+                        {
+                            versionName = gamePackage.LatestVersion;
+                        }
                     }
 
                     var packageVersion = gamePackage.PackageVersions.FirstOrDefault(v => v.Name.Equals(versionName, StringComparison.OrdinalIgnoreCase));
